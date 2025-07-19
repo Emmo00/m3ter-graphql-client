@@ -5,7 +5,7 @@ A TypeScript library for interacting with the M3ter GraphQL API.
 ## Installation
 
 ```bash
-npm install graphql-m3ter-client
+npm install m3ter-graphql-client
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ npm install graphql-m3ter-client
 ### Basic usage
 
 ```typescript
-import { MeterClient } from "graphql-m3ter-client";
+import { MeterClient } from "m3ter-graphql-client";
 
 // Initialize the client with your GraphQL endpoint
 const client = new MeterClient({
