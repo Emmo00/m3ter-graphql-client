@@ -1,5 +1,5 @@
-import { Meter } from "../types";
-import { MeterGraphQLClient } from "../client";
+import { Meter } from '../types';
+import { MeterGraphQLClient } from '../client';
 
 export const METERS_QUERY = `
   query GetMeters {
@@ -58,7 +58,7 @@ export class MetersAPI {
     const response = await this.client.query<{ meters: Meter[] }>(METERS_QUERY);
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     return response.data?.meters || [];
@@ -71,13 +71,13 @@ export class MetersAPI {
    */
   async getMeter(params: { meterNumber?: string; contractId?: string }): Promise<Meter | null> {
     if (!params.meterNumber && !params.contractId) {
-      throw new Error("Either meterNumber or contractId must be provided");
+      throw new Error('Either meterNumber or contractId must be provided');
     }
 
     const response = await this.client.query<{ meter: Meter }>(METER_QUERY, params);
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     return response.data?.meter || null;

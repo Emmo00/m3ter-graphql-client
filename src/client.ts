@@ -1,5 +1,5 @@
-import fetch from "cross-fetch";
-import { GraphQLResponse } from "./types";
+import fetch from 'cross-fetch';
+import { GraphQLResponse } from './types';
 
 export class MeterGraphQLClient {
   private endpoint: string;
@@ -7,14 +7,14 @@ export class MeterGraphQLClient {
 
   constructor(options: { endpoint: string; headers?: Record<string, string> }) {
     if (!options.endpoint) {
-      throw new Error("The endpoint option is required");
+      throw new Error('The endpoint option is required');
     }
 
     this.endpoint = options.endpoint;
     this.headers = {
-      "Content-Type": "application/json",
-      "X-Client-Version": "1.0.0",
-      "X-Source": "MeterGraphQLClient",
+      'Content-Type': 'application/json',
+      'X-Client-Version': '1.0.0',
+      'X-Source': 'MeterGraphQLClient',
       ...(options.headers || {}),
     };
   }
@@ -50,7 +50,7 @@ export class MeterGraphQLClient {
    */
   setHeaders(headers: Record<string, string>): void {
     this.headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...headers,
     };
   }
@@ -74,11 +74,11 @@ export class MeterGraphQLClient {
    */
   async query<T = any>(
     query: string,
-    variables?: Record<string, any>
+    variables?: Record<string, any>,
   ): Promise<GraphQLResponse<T>> {
     try {
       const response = await fetch(this.endpoint, {
-        method: "POST",
+        method: 'POST',
         headers: this.headers,
         body: JSON.stringify({
           query,
@@ -92,7 +92,7 @@ export class MeterGraphQLClient {
 
       return await response.json();
     } catch (error) {
-      console.error("GraphQL query error:", error);
+      console.error('GraphQL query error:', error);
       throw error;
     }
   }
@@ -105,7 +105,7 @@ export class MeterGraphQLClient {
    */
   async executeCustomQuery<T = any>(
     query: string,
-    variables?: Record<string, any>
+    variables?: Record<string, any>,
   ): Promise<GraphQLResponse<T>> {
     return this.query<T>(query, variables);
   }

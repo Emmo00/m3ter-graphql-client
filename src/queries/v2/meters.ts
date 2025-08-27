@@ -1,5 +1,5 @@
-import { MeterV2 } from "../../types";
-import { MeterGraphQLClient } from "../../client";
+import { MeterV2 } from '../../types';
+import { MeterGraphQLClient } from '../../client';
 
 export const METERS_QUERY = `
   query GetMeters {
@@ -37,7 +37,7 @@ export class MetersAPIV2 {
     const response = await this.client.query<{ meters: MeterV2[] }>(METERS_QUERY);
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     // reset client endpoint to call v1
@@ -58,7 +58,7 @@ export class MetersAPIV2 {
     const response = await this.client.query<{ meter: MeterV2 }>(METER_QUERY, { meterNumber });
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     // reset to v1 route

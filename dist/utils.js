@@ -1,5 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.extractNodesFromEdges = extractNodesFromEdges;
 exports.getLastCursor = getLastCursor;
 /**
@@ -8,9 +8,7 @@ exports.getLastCursor = getLastCursor;
  * @returns Array of data points
  */
 function extractNodesFromEdges(edges) {
-    return edges
-        .filter((edge) => edge.node !== undefined)
-        .map((edge) => edge.node);
+  return edges.filter((edge) => edge.node !== undefined).map((edge) => edge.node);
 }
 /**
  * Get the last cursor from a list of edges
@@ -18,7 +16,6 @@ function extractNodesFromEdges(edges) {
  * @returns The last cursor or undefined
  */
 function getLastCursor(edges) {
-    if (edges.length === 0)
-        return undefined;
-    return edges[edges.length - 1].cursor;
+  if (edges.length === 0) return undefined;
+  return edges[edges.length - 1].cursor;
 }

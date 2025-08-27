@@ -1,14 +1,14 @@
-export * from "./types";
-export * from "./client";
-export * from "./queries/meters";
-export * from "./queries/dataPoints";
-export * from "./utils";
+export * from './types';
+export * from './client';
+export * from './queries/meters';
+export * from './queries/dataPoints';
+export * from './utils';
 
-import { MeterGraphQLClient } from "./client";
-import { MetersAPI } from "./queries/meters";
-import { DataPointsAPI } from "./queries/dataPoints";
-import { MetersAPIV2 } from "./queries/v2/meters";
-import { DataPointsAPIV2 } from "./queries/v2/dataPoints";
+import { MeterGraphQLClient } from './client';
+import { MetersAPI } from './queries/meters';
+import { DataPointsAPI } from './queries/dataPoints';
+import { MetersAPIV2 } from './queries/v2/meters';
+import { DataPointsAPIV2 } from './queries/v2/dataPoints';
 
 /**
  * Main class for the Meter GraphQL client package
@@ -70,7 +70,7 @@ export class MeterClient {
     const response = await this.client.executeCustomQuery<T>(query, variables);
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     return response.data as T;

@@ -67,8 +67,8 @@ export interface MeterDataPointEdgeV2 {
 }
 
 export enum MeterDataPointOrderBy {
-  HEIGHT_ASC = "HEIGHT_ASC",
-  HEIGHT_DESC = "HEIGHT_DESC",
+  HEIGHT_ASC = 'HEIGHT_ASC',
+  HEIGHT_DESC = 'HEIGHT_DESC',
 }
 
 export interface MeterDataPointsQueryParams {

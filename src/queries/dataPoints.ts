@@ -1,5 +1,5 @@
-import { MeterDataPointEdge, MeterDataPointsQueryParams } from "../types";
-import { MeterGraphQLClient } from "../client";
+import { MeterDataPointEdge, MeterDataPointsQueryParams } from '../types';
+import { MeterGraphQLClient } from '../client';
 
 export const METER_DATA_POINTS_QUERY = `
   query GetMeterDataPoints(
@@ -53,7 +53,7 @@ export class DataPointsAPI {
     }>(METER_DATA_POINTS_QUERY, params);
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     return response.data?.meterDataPoints || [];

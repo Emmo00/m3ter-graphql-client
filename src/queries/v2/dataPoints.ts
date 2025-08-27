@@ -1,8 +1,5 @@
-import {
-  MeterDataPointEdgeV2,
-  MeterDataPointsQueryParamsV2,
-} from "../../types";
-import { MeterGraphQLClient } from "../../client";
+import { MeterDataPointEdgeV2, MeterDataPointsQueryParamsV2 } from '../../types';
+import { MeterGraphQLClient } from '../../client';
 
 export const METER_DATA_POINTS_QUERY = `
   query GetMeterDataPoints(
@@ -49,7 +46,7 @@ export class DataPointsAPIV2 {
    * @returns Promise with meter data point edges
    */
   async getMeterDataPoints(
-    params: MeterDataPointsQueryParamsV2 = {}
+    params: MeterDataPointsQueryParamsV2 = {},
   ): Promise<MeterDataPointEdgeV2[]> {
     // use v2 route
     this.client.useV2Route();
@@ -59,7 +56,7 @@ export class DataPointsAPIV2 {
     }>(METER_DATA_POINTS_QUERY, params);
 
     if (response.errors) {
-      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
     // reset to v1 route

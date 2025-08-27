@@ -13,13 +13,13 @@ npm install m3ter-graphql-client
 ### Basic usage
 
 ```typescript
-import { MeterClient } from "m3ter-graphql-client";
+import { MeterClient } from 'm3ter-graphql-client';
 
 // Initialize the client with your GraphQL endpoint
 const client = new MeterClient({
-  endpoint: "https://your-graphql-endpoint.com/graphql",
+  endpoint: 'https://your-graphql-endpoint.com/graphql',
   headers: {
-    Authorization: "Bearer YOUR_TOKEN", // Optional
+    Authorization: 'Bearer YOUR_TOKEN', // Optional
   },
 });
 
@@ -31,16 +31,16 @@ async function getAllMeters() {
 
 // Get a specific meter
 async function getMeter() {
-  const meter = await client.meters.getMeter({ meterNumber: "METER123" });
+  const meter = await client.meters.getMeter({ meterNumber: 'METER123' });
   console.log(meter);
 }
 
 // Get meter data points with pagination
 async function getMeterDataPoints() {
   const dataPointEdges = await client.dataPoints.getMeterDataPoints({
-    meterNumber: "METER123",
+    meterNumber: 'METER123',
     first: 10,
-    sortBy: "HEIGHT_DESC",
+    sortBy: 'HEIGHT_DESC',
   });
   console.log(dataPointEdges);
 }
@@ -61,7 +61,7 @@ async function executeCustomQuery() {
     }
   `;
 
-  const result = await client.executeCustomQuery(customQuery, { id: "123" });
+  const result = await client.executeCustomQuery(customQuery, { id: '123' });
   console.log(result);
 }
 ```
@@ -72,7 +72,7 @@ You can change the GraphQL endpoint at runtime:
 
 ```typescript
 // Switch to a different subgraph
-client.setEndpoint("https://different-graphql-endpoint.com/graphql");
+client.setEndpoint('https://different-graphql-endpoint.com/graphql');
 ```
 
 ### Handle authentication
@@ -80,12 +80,12 @@ client.setEndpoint("https://different-graphql-endpoint.com/graphql");
 ```typescript
 // Set or update authentication headers
 client.setHeaders({
-  Authorization: "Bearer NEW_TOKEN",
+  Authorization: 'Bearer NEW_TOKEN',
 });
 
 // Add additional headers
 client.addHeaders({
-  "X-Custom-Header": "CustomValue",
+  'X-Custom-Header': 'CustomValue',
 });
 ```
 
