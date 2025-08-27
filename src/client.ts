@@ -37,8 +37,6 @@ export class MeterGraphQLClient {
     return origin;
   }
 
-  
-
   useV2Route(): void {
     this.setEndpoint(`${MeterGraphQLClient.getURLOrigin(this.endpoint)}/v2`);
   }

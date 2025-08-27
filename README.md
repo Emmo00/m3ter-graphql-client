@@ -10,7 +10,6 @@ npm install m3ter-graphql-client
 
 ## Usage
 
-
 ### Basic usage
 
 ```typescript
@@ -94,7 +93,6 @@ async function executeCustomQuery() {
   console.log(result);
 }
 ```
-
 
 ### Change GraphQL endpoint or version
 
