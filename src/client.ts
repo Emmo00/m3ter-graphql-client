@@ -27,6 +27,23 @@ export class MeterGraphQLClient {
     this.endpoint = endpoint;
   }
 
+  static getURLOrigin(url: string): string {
+    const { origin } = new URL(url);
+    return origin;
+  }
+
+  useV2Route(): void {
+    this.setEndpoint(`${MeterGraphQLClient.getURLOrigin(this.endpoint)}/v2`);
+  }
+
+  useV1Route(): void {
+    this.setEndpoint(`${MeterGraphQLClient.getURLOrigin(this.endpoint)}/v1`);
+  }
+
+  resetEndpointRoute(): void {
+    this.setEndpoint(MeterGraphQLClient.getURLOrigin(this.endpoint));
+  }
+
   /**
    * Set custom headers for GraphQL requests
    * @param headers Headers to set
@@ -70,9 +87,7 @@ export class MeterGraphQLClient {
       });
 
       if (!response.ok) {
-        throw new Error(
-          `Network error: ${response.status} ${response.statusText}`
-        );
+        throw new Error(`Network error: ${response.status} ${response.statusText}`);
       }
 
       return await response.json();

@@ -5,6 +5,11 @@ export interface Meter {
   state?: MeterState;
 }
 
+export interface MeterV2 {
+  meterNumber: number;
+  publicKey: string;
+}
+
 export interface MeterState {
   app_eui?: string;
   app_key?: string;
@@ -26,6 +31,16 @@ export interface MeterDataPointPayload {
   publicKey?: string;
 }
 
+export interface MeterDataPointPayloadV2 {
+  nonce?: number;
+  voltage?: number;
+  energy?: number;
+  longitude?: number;
+  latitude?: number;
+  signature?: string;
+  publicKey?: string;
+}
+
 export interface MeterDataPoint {
   transactionId: string;
   contractId?: string;
@@ -34,9 +49,21 @@ export interface MeterDataPoint {
   payload?: MeterDataPointPayload;
 }
 
+export interface MeterDataPointV2 {
+  transactionId: string;
+  meterNumber?: string;
+  timestamp?: number;
+  payload?: MeterDataPointPayloadV2;
+}
+
 export interface MeterDataPointEdge {
   cursor?: string;
   node?: MeterDataPoint;
+}
+
+export interface MeterDataPointEdgeV2 {
+  cursor?: string;
+  node?: MeterDataPointV2;
 }
 
 export enum MeterDataPointOrderBy {
@@ -47,6 +74,13 @@ export enum MeterDataPointOrderBy {
 export interface MeterDataPointsQueryParams {
   meterNumber?: string;
   contractId?: string;
+  first?: number;
+  after?: string;
+  sortBy?: MeterDataPointOrderBy;
+}
+
+export interface MeterDataPointsQueryParamsV2 {
+  meterNumber?: string;
   first?: number;
   after?: string;
   sortBy?: MeterDataPointOrderBy;

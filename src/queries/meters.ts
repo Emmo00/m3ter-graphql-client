@@ -1,4 +1,4 @@
-import { Meter, GraphQLResponse } from "../types";
+import { Meter } from "../types";
 import { MeterGraphQLClient } from "../client";
 
 export const METERS_QUERY = `
@@ -58,9 +58,7 @@ export class MetersAPI {
     const response = await this.client.query<{ meters: Meter[] }>(METERS_QUERY);
 
     if (response.errors) {
-      throw new Error(
-        `GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`
-      );
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
     }
 
     return response.data?.meters || [];
@@ -71,23 +69,15 @@ export class MetersAPI {
    * @param params Search parameters
    * @returns Promise with the meter or null if not found
    */
-  async getMeter(params: {
-    meterNumber?: string;
-    contractId?: string;
-  }): Promise<Meter | null> {
+  async getMeter(params: { meterNumber?: string; contractId?: string }): Promise<Meter | null> {
     if (!params.meterNumber && !params.contractId) {
       throw new Error("Either meterNumber or contractId must be provided");
     }
 
-    const response = await this.client.query<{ meter: Meter }>(
-      METER_QUERY,
-      params
-    );
+    const response = await this.client.query<{ meter: Meter }>(METER_QUERY, params);
 
     if (response.errors) {
-      throw new Error(
-        `GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`
-      );
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
     }
 
     return response.data?.meter || null;

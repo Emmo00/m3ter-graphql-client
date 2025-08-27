@@ -1,17 +1,18 @@
-import { MeterDataPointEdge, MeterDataPointsQueryParams } from "../types";
-import { MeterGraphQLClient } from "../client";
+import {
+  MeterDataPointEdgeV2,
+  MeterDataPointsQueryParamsV2,
+} from "../../types";
+import { MeterGraphQLClient } from "../../client";
 
 export const METER_DATA_POINTS_QUERY = `
   query GetMeterDataPoints(
     $meterNumber: String
-    $contractId: String
     $first: Int
     $after: String
     $sortBy: MeterDataPointOrderBy
   ) {
     meterDataPoints(
       meterNumber: $meterNumber
-      contractId: $contractId
       first: $first
       after: $after
       sortBy: $sortBy
@@ -19,14 +20,14 @@ export const METER_DATA_POINTS_QUERY = `
       cursor
       node {
         transactionId
-        contractId
         meterNumber
         timestamp
         payload {
           nonce
           voltage
-          current
           energy
+          longitude
+          latitude
           signature
           publicKey
         }
@@ -35,7 +36,7 @@ export const METER_DATA_POINTS_QUERY = `
   }
 `;
 
-export class DataPointsAPI {
+export class DataPointsAPIV2 {
   private client: MeterGraphQLClient;
 
   constructor(client: MeterGraphQLClient) {
@@ -47,14 +48,22 @@ export class DataPointsAPI {
    * @param params Query parameters
    * @returns Promise with meter data point edges
    */
-  async getMeterDataPoints(params: MeterDataPointsQueryParams = {}): Promise<MeterDataPointEdge[]> {
+  async getMeterDataPoints(
+    params: MeterDataPointsQueryParamsV2 = {}
+  ): Promise<MeterDataPointEdgeV2[]> {
+    // use v2 route
+    this.client.useV2Route();
+
     const response = await this.client.query<{
-      meterDataPoints: MeterDataPointEdge[];
+      meterDataPoints: MeterDataPointEdgeV2[];
     }>(METER_DATA_POINTS_QUERY, params);
 
     if (response.errors) {
       throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
     }
+
+    // reset to v1 route
+    this.client.useV1Route();
 
     return response.data?.meterDataPoints || [];
   }

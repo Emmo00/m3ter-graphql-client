@@ -7,6 +7,8 @@ export * from "./utils";
 import { MeterGraphQLClient } from "./client";
 import { MetersAPI } from "./queries/meters";
 import { DataPointsAPI } from "./queries/dataPoints";
+import { MetersAPIV2 } from "./queries/v2/meters";
+import { DataPointsAPIV2 } from "./queries/v2/dataPoints";
 
 /**
  * Main class for the Meter GraphQL client package
@@ -15,6 +17,10 @@ export class MeterClient {
   private client: MeterGraphQLClient;
   readonly meters: MetersAPI;
   readonly dataPoints: DataPointsAPI;
+  readonly v2: {
+    readonly meters: MetersAPIV2;
+    readonly dataPoints: DataPointsAPIV2;
+  };
 
   /**
    * Create a new MeterClient instance
@@ -24,6 +30,10 @@ export class MeterClient {
     this.client = new MeterGraphQLClient(options);
     this.meters = new MetersAPI(this.client);
     this.dataPoints = new DataPointsAPI(this.client);
+    this.v2 = {
+      meters: new MetersAPIV2(this.client),
+      dataPoints: new DataPointsAPIV2(this.client),
+    };
   }
 
   /**
@@ -56,16 +66,11 @@ export class MeterClient {
    * @param variables Variables for the query
    * @returns Promise with the query results
    */
-  async executeCustomQuery<T = any>(
-    query: string,
-    variables?: Record<string, any>
-  ): Promise<T> {
+  async executeCustomQuery<T = any>(query: string, variables?: Record<string, any>): Promise<T> {
     const response = await this.client.executeCustomQuery<T>(query, variables);
 
     if (response.errors) {
-      throw new Error(
-        `GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`
-      );
+      throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(", ")}`);
     }
 
     return response.data as T;
