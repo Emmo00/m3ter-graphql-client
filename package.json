@@ -12,7 +12,9 @@
     "test": "jest",
     "lint": "eslint src/**/*.ts",
     "prepare": "npm run build",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "ci": "npm run build && npm run check-format"
   },
   "keywords": [
     "m3ter",
