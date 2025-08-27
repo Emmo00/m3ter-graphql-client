@@ -1,6 +1,6 @@
 {
   "name": "m3ter-graphql-client",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Library for interacting with the Meter GraphQL API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,8 @@
     "prepare": "npm run build",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "ci": "npm run build && npm run check-format"
+    "ci": "npm run build && npm run check-format",
+    "local-release": "changeset version && changeset publish"
   },
   "keywords": [
     "m3ter",
