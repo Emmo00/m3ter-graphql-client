@@ -1,17 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataPointsAPI = exports.METER_DATA_POINTS_QUERY = void 0;
+exports.DataPointsAPIV2 = exports.METER_DATA_POINTS_QUERY = void 0;
 exports.METER_DATA_POINTS_QUERY = `
   query GetMeterDataPoints(
     $meterNumber: String
-    $contractId: String
     $first: Int
     $after: String
     $sortBy: MeterDataPointOrderBy
   ) {
     meterDataPoints(
       meterNumber: $meterNumber
-      contractId: $contractId
       first: $first
       after: $after
       sortBy: $sortBy
@@ -19,14 +17,14 @@ exports.METER_DATA_POINTS_QUERY = `
       cursor
       node {
         transactionId
-        contractId
         meterNumber
         timestamp
         payload {
           nonce
           voltage
-          current
           energy
+          longitude
+          latitude
           signature
           publicKey
         }
@@ -34,7 +32,7 @@ exports.METER_DATA_POINTS_QUERY = `
     }
   }
 `;
-class DataPointsAPI {
+class DataPointsAPIV2 {
     constructor(client) {
         this.client = client;
     }
@@ -45,11 +43,15 @@ class DataPointsAPI {
      */
     async getMeterDataPoints(params = {}) {
         var _a;
+        // use v2 route
+        this.client.useV2Route();
         const response = await this.client.query(exports.METER_DATA_POINTS_QUERY, params);
         if (response.errors) {
             throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
         }
+        // reset to v1 route
+        this.client.useV1Route();
         return ((_a = response.data) === null || _a === void 0 ? void 0 : _a.meterDataPoints) || [];
     }
 }
-exports.DataPointsAPI = DataPointsAPI;
+exports.DataPointsAPIV2 = DataPointsAPIV2;
