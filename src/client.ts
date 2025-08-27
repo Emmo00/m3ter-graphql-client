@@ -27,10 +27,17 @@ export class MeterGraphQLClient {
     this.endpoint = endpoint;
   }
 
+  /**
+   * Get the origin (protocol + host) of a URL
+   * @param url The URL to parse
+   * @returns The origin of the URL
+   */
   static getURLOrigin(url: string): string {
     const { origin } = new URL(url);
     return origin;
   }
+
+  
 
   useV2Route(): void {
     this.setEndpoint(`${MeterGraphQLClient.getURLOrigin(this.endpoint)}/v2`);

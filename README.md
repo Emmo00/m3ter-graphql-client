@@ -10,6 +10,7 @@ npm install m3ter-graphql-client
 
 ## Usage
 
+
 ### Basic usage
 
 ```typescript
@@ -23,21 +24,49 @@ const client = new MeterClient({
   },
 });
 
-// Get all meters
+// Get all meters (V1)
 async function getAllMeters() {
   const meters = await client.meters.getMeters();
   console.log(meters);
 }
 
-// Get a specific meter
+// Get a specific meter (V1)
 async function getMeter() {
   const meter = await client.meters.getMeter({ meterNumber: 'METER123' });
   console.log(meter);
 }
 
-// Get meter data points with pagination
+// Get meter data points with pagination (V1)
 async function getMeterDataPoints() {
   const dataPointEdges = await client.dataPoints.getMeterDataPoints({
+    meterNumber: 'METER123',
+    first: 10,
+    sortBy: 'HEIGHT_DESC',
+  });
+  console.log(dataPointEdges);
+}
+```
+
+### Using the V2 API
+
+The client exposes a `v2` property for accessing the V2 endpoints:
+
+```typescript
+// Get all meters (V2)
+async function getAllMetersV2() {
+  const meters = await client.v2.meters.getMeters();
+  console.log(meters);
+}
+
+// Get a specific meter (V2)
+async function getMeterV2() {
+  const meter = await client.v2.meters.getMeter({ meterNumber: 'METER123' });
+  console.log(meter);
+}
+
+// Get meter data points (V2)
+async function getMeterDataPointsV2() {
+  const dataPointEdges = await client.v2.dataPoints.getMeterDataPoints({
     meterNumber: 'METER123',
     first: 10,
     sortBy: 'HEIGHT_DESC',
@@ -66,13 +95,45 @@ async function executeCustomQuery() {
 }
 ```
 
-### Change GraphQL endpoint
+
+### Change GraphQL endpoint or version
 
 You can change the GraphQL endpoint at runtime:
 
 ```typescript
-// Switch to a different subgraph
+// Switch to a different subgraph or GraphQL server version
 client.setEndpoint('https://different-graphql-endpoint.com/graphql');
+```
+
+#### Change between GraphQL server versions
+
+If your project uses different endpoints for different API versions (e.g., v1 and v2), you can switch between them at runtime:
+
+```typescript
+// Set to v1 endpoint
+client.setEndpoint('https://api.example.com/graphql/v1');
+
+// Set to v2 endpoint
+client.setEndpoint('https://api.example.com/graphql/v2');
+
+// You can continue to use the same client instance:
+const metersV2 = await client.v2.meters.getMeters();
+```
+
+#### Helper functions for headers and endpoint
+
+You can also update authentication or custom headers at any time:
+
+```typescript
+// Set or update authentication headers
+client.setHeaders({
+  Authorization: 'Bearer NEW_TOKEN',
+});
+
+// Add additional headers
+client.addHeaders({
+  'X-Custom-Header': 'CustomValue',
+});
 ```
 
 ### Handle authentication
