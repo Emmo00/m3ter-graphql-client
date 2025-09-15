@@ -1,6 +1,6 @@
 {
   "name": "m3ter-graphql-client",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Library for interacting with the Meter GraphQL API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
