@@ -1,5 +1,11 @@
 # m3ter-graphql-client
 
+## 2.1.2
+
+### Patch Changes
+
+- 5e6c4ea: Change meterNumber query parameter in V2 from string to integer
+
 ## 2.1.1
 
 ### Patch Changes
