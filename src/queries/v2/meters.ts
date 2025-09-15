@@ -40,8 +40,8 @@ export class MetersAPIV2 {
       throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
-    // reset client endpoint to call v1
-    this.client.useV1Route();
+    // reset client endpoint
+    this.client.resetEndpointRoute();
 
     return response.data?.meters || [];
   }
@@ -61,8 +61,8 @@ export class MetersAPIV2 {
       throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
 
-    // reset to v1 route
-    this.client.useV1Route();
+    // reset to base route
+    this.client.resetEndpointRoute();
 
     return response.data?.meter || null;
   }

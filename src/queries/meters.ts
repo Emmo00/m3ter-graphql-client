@@ -55,11 +55,17 @@ export class MetersAPI {
    * @returns Promise with all meters
    */
   async getMeters(): Promise<Meter[]> {
+    // use v1 route
+    this.client.useV1Route();
+
     const response = await this.client.query<{ meters: Meter[] }>(METERS_QUERY);
 
     if (response.errors) {
       throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
+
+    // reset to origin route
+    this.client.resetEndpointRoute();
 
     return response.data?.meters || [];
   }
@@ -70,6 +76,9 @@ export class MetersAPI {
    * @returns Promise with the meter or null if not found
    */
   async getMeter(params: { meterNumber?: string; contractId?: string }): Promise<Meter | null> {
+    // use v1 route
+    this.client.useV1Route();
+
     if (!params.meterNumber && !params.contractId) {
       throw new Error('Either meterNumber or contractId must be provided');
     }
@@ -79,6 +88,9 @@ export class MetersAPI {
     if (response.errors) {
       throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
+
+    // reset to origin route
+    this.client.resetEndpointRoute();
 
     return response.data?.meter || null;
   }

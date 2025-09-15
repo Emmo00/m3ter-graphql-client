@@ -48,6 +48,9 @@ export class DataPointsAPI {
    * @returns Promise with meter data point edges
    */
   async getMeterDataPoints(params: MeterDataPointsQueryParams = {}): Promise<MeterDataPointEdge[]> {
+    // use v1 route
+    this.client.useV1Route();
+
     const response = await this.client.query<{
       meterDataPoints: MeterDataPointEdge[];
     }>(METER_DATA_POINTS_QUERY, params);
@@ -55,6 +58,9 @@ export class DataPointsAPI {
     if (response.errors) {
       throw new Error(`GraphQL error: ${response.errors.map((e) => e.message).join(', ')}`);
     }
+
+    // reset to base route
+    this.client.resetEndpointRoute();
 
     return response.data?.meterDataPoints || [];
   }
