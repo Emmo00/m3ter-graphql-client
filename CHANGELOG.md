@@ -1,5 +1,11 @@
 # m3ter-graphql-client
 
+## 2.1.1
+
+### Patch Changes
+
+- 176556c: docs for nonce query and static method for nonce array generation
+
 ## 2.1.0
 
 ### Minor Changes
