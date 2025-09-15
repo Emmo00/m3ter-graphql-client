@@ -3,7 +3,7 @@ import { MeterGraphQLClient } from '../../client';
 
 export const METER_DATA_POINTS_QUERY = `
   query GetMeterDataPoints(
-    $meterNumber: String
+    $meterNumber: Int!
     $first: Int
     $after: String
     $sortBy: MeterDataPointOrderBy
@@ -47,9 +47,7 @@ export class DataPointsAPIV2 {
    * @param params Query parameters
    * @returns Promise with meter data point edges
    */
-  async getMeterDataPoints(
-    params: MeterDataPointsQueryParamsV2 = {},
-  ): Promise<MeterDataPointEdgeV2[]> {
+  async getMeterDataPoints(params: MeterDataPointsQueryParamsV2): Promise<MeterDataPointEdgeV2[]> {
     // use v2 route
     this.client.useV2Route();
 

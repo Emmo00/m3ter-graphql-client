@@ -59,14 +59,14 @@ async function getAllMetersV2() {
 
 // Get a specific meter (V2)
 async function getMeterV2() {
-  const meter = await client.v2.meters.getMeter({ meterNumber: 'METER123' });
+  const meter = await client.v2.meters.getMeter({ meterNumber: 1 });
   console.log(meter);
 }
 
 // Get meter data points (V2)
 async function getMeterDataPointsV2() {
   const dataPointEdges = await client.v2.dataPoints.getMeterDataPoints({
-    meterNumber: 'METER123',
+    meterNumber: 1,
     first: 10,
     sortBy: 'HEIGHT_DESC',
   });
@@ -82,7 +82,7 @@ The V2 client supports querying data with an array of nonces for more flexible d
 // Query data points with multiple specific nonces
 async function getDataPointsWithNonces() {
   const dataPoints = await client.v2.dataPoints.getMeterDataPoints({
-    meterNumber: 'METER123',
+    meterNumber: 1,
     nonces: [1, 2, 3, 5, 8, 13], // Array of specific nonce values
     first: 20,
   });
@@ -94,7 +94,7 @@ async function getDataPointsWithNonceRange() {
   const nonces = MeterClient.createNonceArray(1, 100); // Creates [1, 2, 3, ..., 100]
 
   const dataPoints = await client.v2.dataPoints.getMeterDataPoints({
-    meterNumber: 'METER123',
+    meterNumber: 1,
     nonces: nonces,
     first: 50,
   });
@@ -125,7 +125,7 @@ console.log(nonces); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 // Use with V2 APIs
 const dataPoints = await client.v2.dataPoints.getMeterDataPoints({
-  meterNumber: 'METER123',
+  meterNumber: 1,
   nonces: MeterClient.createNonceArray(100, 150),
   first: 25,
 });

@@ -51,7 +51,7 @@ export interface MeterDataPoint {
 
 export interface MeterDataPointV2 {
   transactionId: string;
-  meterNumber?: string;
+  meterNumber?: number;
   timestamp?: number;
   payload?: MeterDataPointPayloadV2;
 }
@@ -80,7 +80,7 @@ export interface MeterDataPointsQueryParams {
 }
 
 export interface MeterDataPointsQueryParamsV2 {
-  meterNumber?: string;
+  meterNumber: number;
   first?: number;
   after?: string;
   sortBy?: MeterDataPointOrderBy;

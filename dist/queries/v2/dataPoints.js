@@ -3,7 +3,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 exports.DataPointsAPIV2 = exports.METER_DATA_POINTS_QUERY = void 0;
 exports.METER_DATA_POINTS_QUERY = `
   query GetMeterDataPoints(
-    $meterNumber: String
+    $meterNumber: Int!
     $first: Int
     $after: String
     $sortBy: MeterDataPointOrderBy
@@ -43,7 +43,7 @@ class DataPointsAPIV2 {
    * @param params Query parameters
    * @returns Promise with meter data point edges
    */
-  async getMeterDataPoints(params = {}) {
+  async getMeterDataPoints(params) {
     var _a;
     // use v2 route
     this.client.useV2Route();
