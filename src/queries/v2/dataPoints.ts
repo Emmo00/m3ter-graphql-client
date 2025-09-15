@@ -7,12 +7,14 @@ export const METER_DATA_POINTS_QUERY = `
     $first: Int
     $after: String
     $sortBy: MeterDataPointOrderBy
+    $nonces: [Int!]
   ) {
     meterDataPoints(
       meterNumber: $meterNumber
       first: $first
       after: $after
       sortBy: $sortBy
+      nonces: $nonces
     ) {
       cursor
       node {

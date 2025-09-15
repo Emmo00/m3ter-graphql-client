@@ -84,6 +84,7 @@ export interface MeterDataPointsQueryParamsV2 {
   first?: number;
   after?: string;
   sortBy?: MeterDataPointOrderBy;
+  nonces?: number[];
 }
 
 export interface GraphQLResponse<T> {
