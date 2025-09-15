@@ -45,4 +45,16 @@ export declare class MeterClient {
    * @returns Promise with the query results
    */
   executeCustomQuery<T = any>(query: string, variables?: Record<string, any>): Promise<T>;
+  /**
+   * Create an array of nonces from a start to end range (inclusive)
+   * @param startNonce The starting nonce value
+   * @param endNonce The ending nonce value (inclusive)
+   * @returns Array of nonce numbers
+   * @example
+   * ```typescript
+   * const nonces = MeterClient.createNonceArray(1, 5);
+   * // Returns: [1, 2, 3, 4, 5]
+   * ```
+   */
+  static createNonceArray(startNonce: number, endNonce: number): number[];
 }

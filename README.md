@@ -74,6 +74,76 @@ async function getMeterDataPointsV2() {
 }
 ```
 
+#### Using array of nonces with V2 API
+
+The V2 client supports querying data with an array of nonces for more flexible data retrieval:
+
+```typescript
+// Query data points with multiple specific nonces
+async function getDataPointsWithNonces() {
+  const dataPoints = await client.v2.dataPoints.getMeterDataPoints({
+    meterNumber: 'METER123',
+    nonces: [1, 2, 3, 5, 8, 13], // Array of specific nonce values
+    first: 20,
+  });
+  console.log(dataPoints);
+}
+
+// Create a range of nonces using the helper method
+async function getDataPointsWithNonceRange() {
+  const nonces = MeterClient.createNonceArray(1, 100); // Creates [1, 2, 3, ..., 100]
+
+  const dataPoints = await client.v2.dataPoints.getMeterDataPoints({
+    meterNumber: 'METER123',
+    nonces: nonces,
+    first: 50,
+  });
+  console.log(dataPoints);
+}
+
+// Query meters with multiple nonces
+async function getMetersWithNonces() {
+  const noncesToQuery = MeterClient.createNonceArray(10, 20);
+
+  const meters = await client.v2.meters.getMeters({
+    nonces: noncesToQuery,
+  });
+  console.log(meters);
+}
+```
+
+### Nonce Array Utilities
+
+The library provides a convenient static method to create arrays of nonces for batch operations:
+
+```typescript
+import { MeterClient } from 'm3ter-graphql-client';
+
+// Create a range of nonces
+const nonces = MeterClient.createNonceArray(1, 10);
+console.log(nonces); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+// Use with V2 APIs
+const dataPoints = await client.v2.dataPoints.getMeterDataPoints({
+  meterNumber: 'METER123',
+  nonces: MeterClient.createNonceArray(100, 150),
+  first: 25,
+});
+
+// Error handling for invalid ranges
+try {
+  const invalidNonces = MeterClient.createNonceArray(10, 5); // start > end
+} catch (error) {
+  console.error(error.message); // "Start nonce must be less than or equal to end nonce"
+}
+
+try {
+  const negativeNonces = MeterClient.createNonceArray(-1, 5); // negative values
+} catch (error) {
+  console.error(error.message); // "Nonce values must be non-negative"
+}
+```
+
 ### Custom queries
 
 The library also supports executing custom GraphQL queries:
@@ -170,10 +240,17 @@ new MeterClient({
 - `addHeaders(headers: Record<string, string>)`: Add additional headers
 - `executeCustomQuery<T>(query: string, variables?: Record<string, any>)`: Execute a custom GraphQL query
 
+#### Static Methods
+
+- `createNonceArray(startNonce: number, endNonce: number)`: Create an array of nonce numbers from start to end (inclusive)
+
 #### Properties
 
-- `meters`: Access meters API
-- `dataPoints`: Access data points API
+- `meters`: Access meters API (V1)
+- `dataPoints`: Access data points API (V1)
+- `v2`: Access V2 APIs with enhanced features including array of nonces support
+  - `v2.meters`: Access meters API V2
+  - `v2.dataPoints`: Access data points API V2
 
 ### Meters API
 

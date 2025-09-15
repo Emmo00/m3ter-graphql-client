@@ -89,5 +89,29 @@ class MeterClient {
     }
     return response.data;
   }
+  /**
+   * Create an array of nonces from a start to end range (inclusive)
+   * @param startNonce The starting nonce value
+   * @param endNonce The ending nonce value (inclusive)
+   * @returns Array of nonce numbers
+   * @example
+   * ```typescript
+   * const nonces = MeterClient.createNonceArray(1, 5);
+   * // Returns: [1, 2, 3, 4, 5]
+   * ```
+   */
+  static createNonceArray(startNonce, endNonce) {
+    if (startNonce > endNonce) {
+      throw new Error('Start nonce must be less than or equal to end nonce');
+    }
+    if (startNonce < 0 || endNonce < 0) {
+      throw new Error('Nonce values must be non-negative');
+    }
+    const nonces = [];
+    for (let i = startNonce; i <= endNonce; i++) {
+      nonces.push(i);
+    }
+    return nonces;
+  }
 }
 exports.MeterClient = MeterClient;
